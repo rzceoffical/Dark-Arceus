@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "node .",
     "deploy": "cross-env IS_SCRIPT=true ts-node src/scripts/deploy",
-    "deploy-prod": "cross-env NODE_ENV=production yarn deploy"
+    "deploy-prod": "cross-env NODE_ENV=production yarn deploy",
+    "deploy-remove": "cross-env NODE_ENV=remove yarn deploy"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

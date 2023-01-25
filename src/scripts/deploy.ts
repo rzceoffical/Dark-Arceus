@@ -20,7 +20,14 @@ async function main() {
       ? Routes.applicationCommands(currentUser.id)
       : Routes.applicationGuildCommands(currentUser.id, keys.testGuild)
 
-  await rest.put(endpoint, { body })
+  if (process.env.NODE_ENV === 'remove') {
+    await rest.put(
+      Routes.applicationGuildCommands(currentUser.id, keys.testGuild),
+      { body: [] }
+    )
+  } else {
+    await rest.put(endpoint, { body })
+  }
 
   return currentUser
 }
@@ -33,7 +40,12 @@ main()
       process.env.NODE_ENV === 'production'
         ? `Successfully released commands in production as ${tag}`
         : `Successfully registered commands for development in ${keys.testGuild} as ${tag}`
-
-    console.log(response)
+    if (process.env.NODE_ENV === 'remove') {
+      console.log(
+        `Successfully removed commands for development in ${keys.testGuild} as ${tag}`
+      )
+    } else {
+      console.log(response)
+    }
   })
   .catch(console.error)
